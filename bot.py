@@ -1,24 +1,26 @@
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
+import os
 
-# تعريف دالة لمعالجة أمر /start
+# تعريف دالة معالجة أمر /start
 def start(update: Update, context: CallbackContext) -> None:
-    user = update.effective_user
-    update.message.reply_text(f"مرحبًا {user.first_name}! أنا بوتك. كيف يمكنني مساعدتك؟")
+    # إرسال رسالة الترحيب مع إيموجي يد
+    update.message.reply_text("مرحبا بكم 👋")
 
 def main() -> None:
-    # ضع توكن البوت الخاص بك هنا
-    updater = Updater("7463755558:AAFuiOzMjwblpmD_SL1ZWOIwO7hZs1ISJD8")
-
-    # الحصول على المنبه لمعالجة الأوامر
+    # الحصول على التوكن من متغيرات البيئة (آمن أكثر)
+    TOKEN = os.environ.get("7463755558:AAFuiOzMjwblpmD_SL1ZWOIwO7hZs1ISJD8")
+    
+    # إنشاء الكائنات الأساسية للبوت
+    updater = Updater(TOKEN)
     dispatcher = updater.dispatcher
-
-    # إضافة معالج للأمر /start
+    
+    # إضافة معالج لأمر /start
     dispatcher.add_handler(CommandHandler("start", start))
-
-    # بدء البوت
+    
+    # بدء استقبال التحديثات
     updater.start_polling()
     updater.idle()
 
-if name == "main":
+if __name__ == "__main__":
     main()
